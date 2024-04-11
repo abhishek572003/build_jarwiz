@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Jarwiz!</title>
+    <link rel="stylesheet" href="{% static 'static/css/styles.css' %}">
+</head>
+<body class="bgbody">
+  {% block content %}
+
+
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                   <p>Jarwiz</p>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="{% url 'home' %}" class="link">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="link">About</a></li>
+                    <!-- <li><a href="{% url 'faq' %}" class="link">FAQs</a></li> -->
+                </ul>
+            </div>
+            <div class="nav-button">
+                {% if request.user.is_authenticated %}
+                <div class="nav-menu">
+                    <ul>
+                        <li><a href="{% url 'upload' %}" class="link">Upload</a></li>
+                        <li><a href="{% url 'logout' %}" class="link">Logout</a></li>
+                        <li><a href="{% url 'profile' %}" class="link">Profile</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <div class="nav-menu">
+                    <ul>
+                        <li><a href="{% url 'login' %}" class="link">Login</a></li>
+                        <li><a href="{% url 'signup' %}" class="link">Sign Up</a></li>
+                    </ul>
+                </div>            
+                {% endif %}
+            </div>
+             <div class="nav-menu-btn">
+                  <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+          <div class="content">
+            <h1>Coming Soon</h1>
+          </div>
+<script>
+   
+ function myMenuFunction() {
+    var i = document.getElementById("navMenu");
+         
+    if(i.className === "nav-menu") {
+         i.className += " responsive";
+    }
+    else 
+     {
+      i.className = "nav-menu";
+     }
+    }
+          
+</script>
+<script type="text/javascript">
+    document.getElementById("logoutBtn").onclick = function () {
+        location.href = "{% url 'logout' %}";
+    };
+    document.getElementById("profileBtn").onclick = function () {
+        location.href = "{% url 'profile' %}";
+    };
+</script>
+
+<footer>
+    <div class="row">
+        <div class="footer column">
+            <p><a href="{% url 'tandc' %}" class="link">Terms and Conditions</a></p>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for newpath in newpaths %}
+        {% if foundext == 1 %}
+        <center><embed src="{{ newpath }}" type="application/pdf" width="640px" height="520px"/></center>
+        {% elif foundext == 2 %}
+        <img src="{{ newpath }}">
+        {% elif foundext == 3 %}
+        <video width="640px" height = "640px" controls><source src='{{ newpath }}' type="video/mp4"></video>
+        {% elif foundext == 4 %}
+        <audio controls><source src='{{ newpath }}'' type=></audio>
+        {% endif %}
+    {% endfor %}
+
+</body>
+</html>

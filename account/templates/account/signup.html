@@ -1,0 +1,322 @@
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    
+    <!--Stylesheet-->
+    <style media="screen">
+      *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #080710;
+    
+}
+.background{
+    flex-wrap: wrap;
+    flex: auto;
+    position: relative;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    
+}
+.background .shape{
+    height: 200px;
+    width: 200px;
+    position: relative;
+    border-radius: 50%;
+}
+form{
+    height: max-content;
+    width: max-content;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+    
+}
+form *{
+    font-family: 'Poppins',sans-serif;
+    color: black;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+::placeholder{
+    color: #e5e5e5;
+}
+button{
+    margin-top: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+.column2 {
+  float: left;
+}
+select{
+    overflow: hidden;
+    color: black;
+    font-size: 14px;
+    align-self: center;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-weight: 300;
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+}
+
+.left2 {
+  width: 37%;
+  height: 50px;
+}
+
+.right2 {
+  width: 63%;
+}
+select::content{
+    color: black;
+}
+/* Clear floats after the columns */
+.row2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+    </style>
+    <link rel="stylesheet" href="{% static 'static/css/styles.css' %}">
+    <title>Log Into Your Jarwiz Account</title>
+</head>
+<body class="bgbody">
+ <div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <p>Jarwiz</p>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="{% url 'home' %}" class="link">Home</a></li>
+                <li><a href="{% url 'about' %}" class="link">About</a></li>
+                <!-- <li><a href="{% url 'faq' %}" class="link">FAQs</a></li> -->
+            </ul>
+        </div>
+        <div class="nav-menu">
+            <ul>
+                <li><a href="{% url 'login' %}" class="link">Sign In</a></li>
+            </ul>
+        </div>
+        <div class="nav-menu-btn">
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
+    </nav>
+     
+    </head>
+    <body>
+        <div class="background">
+        <div class="row">
+        <form method="post">
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+            
+            {% csrf_token %}
+            
+            <h3 style="color: #ffffff;">Sign Up</h3>
+            <div class="column">
+                <input type="text" placeholder="First Name" id="first_name" name="first_name" required>
+                </div>
+                <div class="column">
+                <input type="text" placeholder="Last Name" id="last_name" name="last_name" required>
+                <br>
+            </div>
+                
+            <input type="text" placeholder="Email Address" id="email" name="email" required>
+            <br>
+            <div class="row2">
+                <div class="column2 left2">              
+            <select id="countrySelect" name="countrySelect"></select>
+            </div>
+            <div class="column2 right2">
+            <input type="number" placeholder="Phone Number" id="phoneInput" name="phoneInput" required>
+            </div></div>
+            <br>
+            
+            <div class="column">
+                <input type="password" placeholder="Password" id="password1" name="password1" required>
+                </div>
+                <div class="column">
+                    <input type="password" placeholder="Re-enter Password" id="password2" name="password2" required>
+                <br>
+            </div>
+            <input style="color: #ffffff;" type="submit" value="Submit">
+            {% for message in messages %}
+    
+                <div>
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+                </div>
+
+            {% endfor %}
+
+            
+    
+
+            
+
+        </form></div>
+    </div>
+    </body>
+    </html>
+    
+<script>
+   
+   function myMenuFunction() {
+    var i = document.getElementById("navMenu");
+
+    if(i.className === "nav-menu") {
+        i.className += " responsive";
+    } else {
+        i.className = "nav-menu";
+    }
+   }
+   
+   
+</script>
+
+<script>
+// Define countries, their phone codes, and flags
+const countries = [
+  { name: "USA", code: "+1", flag: "🇺🇸" },
+  { name: "Canada", code: "+1", flag: "🇨🇦" },
+  { name: "UK", code: "+44", flag: "🇬🇧" },
+  { name: "Australia", code: "+61", flag: "🇦🇺" },
+  { name: "France", code: "+33", flag: "🇫🇷" },
+  { name: "Germany", code: "+49", flag: "🇩🇪" },
+  { name: "Japan", code: "+81", flag: "🇯🇵" },
+  { name: "China", code: "+86", flag: "🇨🇳" },
+  { name: "Brazil", code: "+55", flag: "🇧🇷" },
+  { name: "Russia", code: "+7", flag: "🇷🇺" },
+  { name: "India", code: "+91", flag: "🇮🇳" },
+  { name: "Italy", code: "+39", flag: "🇮🇹" },
+  { name: "Mexico", code: "+52", flag: "🇲🇽" },
+  { name: "South Korea", code: "+82", flag: "🇰🇷" },
+  { name: "Spain", code: "+34", flag: "🇪🇸" },
+  { name: "Indonesia", code: "+62", flag: "🇮🇩" },
+  { name: "Turkey", code: "+90", flag: "🇹🇷" },
+  { name: "Saudi Arabia", code: "+966", flag: "🇸🇦" },
+  { name: "South Africa", code: "+27", flag: "🇿🇦" },
+  { name: "Argentina", code: "+54", flag: "🇦🇷" }
+  // Add more countries here
+];
+
+// Populate the country dropdown
+const countrySelect = document.getElementById("countrySelect");
+const countryColor = document.getElementById("countrySelect");
+
+countries.forEach(country => {
+  const option = document.createElement("option");
+  option.value = country.code;
+  option.innerHTML = `${country.flag} ${country.name} (${country.code})`;
+  countrySelect.appendChild(option);
+});
+
+// Update placeholder text based on selected country
+countrySelect.addEventListener("change", function() {
+  const country = this.value;
+  const phoneInput = document.getElementById("phoneInput");
+  const selectedCountry = countries.find(c => c.name === country);
+  if (selectedCountry) {
+    phoneInput.placeholder = `Enter ${selectedCountry.name} phone number`;
+  } else {
+    phoneInput.placeholder = "Enter phone number";
+  }
+});
+</script>
+
+<footer>
+    <div class="row">
+        <div class="footer column">
+            <p><a href="{% url 'tandc' %}" class="link">Terms and Conditions</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>`

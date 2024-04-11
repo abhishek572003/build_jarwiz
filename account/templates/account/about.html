@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Jarwiz</title>
+    <link rel="stylesheet" href="{% static 'static/css/style.css' %}">
+</head>
+<body class="bgbody">
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                   <p>Jarwiz</p>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="{% url 'home' %}" class="link">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="link">About</a></li>
+                    <!-- <li><a href="{% url 'faq' %}" class="link">FAQs</a></li> -->
+                </ul>
+            </div>
+            <div class="nav-button">
+                {% if request.user.is_authenticated %}
+                <div class="nav-menu">
+                    <ul>
+                        <li><a href="{% url 'upload' %}" class="link">Upload</a></li>
+                        <li><a href="{% url 'fetch' %}" class="link">Fetch</a></li>
+                        <li><a href="{% url 'logout' %}" class="link">Logout</a></li>
+                        <li><a href="{% url 'profile' %}" class="link">Profile</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <div class="nav-menu">
+                    <ul>
+                        <li><a href="{% url 'login' %}" class="link">Login</a></li>
+                        <li><a href="{% url 'signup' %}" class="link">Sign Up</a></li>
+                    </ul>
+                </div>            
+                {% endif %}
+            </div>
+             <div class="nav-menu-btn">
+                   <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <div class="profile_card">
+            <div class="profile_container">
+                <br>
+                <br>
+                <br>
+              <h1><b>About Jarwiz</b></h1>
+              <br>
+              <hr>
+              <br><br>
+              <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic omnis alias molestias tempora, asperiores et aperiam suscipit assumenda commodi ducimus quia sequi, exercitationem perspiciatis. Culpa, deleniti? Modi temporibus beatae nisi.</h3>
+                    
+                </div>
+              </div>
+            </div>
+          </div>
+    <script>
+            function myMenuFunction() {
+               var i = document.getElementById("navMenu");
+                    
+               if(i.className === "nav-menu") {
+                    i.className += " responsive";
+               }
+               else 
+                {
+                 i.className = "nav-menu";
+                }
+               }
+
+        document.getElementById("logoutBtn").onclick = function () {
+        location.href = "{% url 'logout' %}";
+        };
+        document.getElementById("profileBtn").onclick = function () {
+            location.href = "{% url 'profile' %}";
+        };
+                     
+           </script>
+
+           
+           </body>
+           <footer>
+            <div class="row">
+                <div class="footer column">
+                    <p><a href="{% url 'tandc' %}" class="link">Terms and Conditions</a></p>
+                </div>
+            </div>
+        </footer>
+           </html>
+
+
+
+           

@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="{% static 'static/css/style.css' %}">
+</head>
+<body class="bgbody">
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                   <p>Jarwiz</p>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="{% url 'home' %}" class="link">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="link">About</a></li>
+                    <li><a href="{% url 'fetch' %}" class="link">Retrieve</a></li>
+                    <!-- <li><a href="{% url 'faq' %}" class="link">FAQs</a></li> -->
+                </ul>
+            </div>
+            <div class="nav-menu">
+                <ul>
+                    <li><a href="{% url 'upload' %}" class="link">Upload</a></li>
+                    <li><a href="{% url 'logout' %}" class="link">Log Out</a></li>
+                </ul>
+            </div>
+             <div class="nav-menu-btn">
+                   <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+        <br>
+        <br>
+        <br>
+        <div class="profile_card">
+            <div class="profile_container">
+                {% if messages %}
+
+                {% for message in messages %}
+                
+            
+                <div {% if message.tags %}  class="alert alert-{{ message.tags }}  alert-dismissible  fade show" {% endif %} role="alert">
+                  {{ message }}
+                  <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+                </div>
+            
+                {% endfor %} 
+                {% endif %}
+                <h1><b>{{ user.first_name }} {{ user.last_name }}</b></h1>
+                <p>Email: {{ user.email }}</p>
+                <p>Primary Phone Number: +{{ user.phone }}</p>
+                <br>
+                <hr>
+                <div class="verification">
+                    <h4>Phone Numbers</h4>
+                    <hr>
+                    <ul>
+                        {% for phone_number in phone_numbers %}
+                        <li>+{{ phone_number.phone_number }} <a href="{% url 'delete_phone_number' phone_number.id %}">Delete</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% comment %} <a href="{% url 'add_phone_number' %}">Add Phone Number</a> {% endcomment %}
+                </div>
+                <div class="verification">
+                    <h4>Email ID</h4>
+                    <hr>
+                    <ul>
+                        {% for phone_number in user_emails %}
+                        <li>{{ phone_number.email }} <a href="{% url 'delete_email' phone_number.id %}">Delete</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% comment %} <a href="{% url 'add_phone_number' %}">Add Phone Number</a> {% endcomment %}
+                </div>
+                <div class="add-phone-form">
+                    <h2>Add Phone Number</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        {{ form.as_p }}
+                        <select id="countrySelect" name="countrySelect">
+                            <option id="countrySelect" >Select Country</option>
+                        </select>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                <div class="add-email-form">
+                    <h2>Add Email ID</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        {{ emailform.as_p }}
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>        
+    <script>
+            function myMenuFunction() {
+               var i = document.getElementById("navMenu");
+                    
+               if(i.className === "nav-menu") {
+                    i.className += " responsive";
+               }
+               else 
+                {
+                 i.className = "nav-menu";
+                }
+               }
+
+        document.getElementById("logoutBtn").onclick = function () {
+        location.href = "{% url 'logout' %}";
+        };
+                     
+
+   
+    function myMenuFunction() {
+     var i = document.getElementById("navMenu");
+ 
+     if(i.className === "nav-menu") {
+         i.className += " responsive";
+     } else {
+         i.className = "nav-menu";
+     }
+    }
+
+</script>
+ <script>
+    // Define countries, their phone codes, and flags
+    const countries = [
+      { name: "USA", code: "+1", flag: "🇺🇸" },
+      { name: "Canada", code: "+1", flag: "🇨🇦" },
+      { name: "UK", code: "+44", flag: "🇬🇧" },
+      { name: "Australia", code: "+61", flag: "🇦🇺" },
+      { name: "France", code: "+33", flag: "🇫🇷" },
+      { name: "Germany", code: "+49", flag: "🇩🇪" },
+      { name: "Japan", code: "+81", flag: "🇯🇵" },
+      { name: "China", code: "+86", flag: "🇨🇳" },
+      { name: "Brazil", code: "+55", flag: "🇧🇷" },
+      { name: "Russia", code: "+7", flag: "🇷🇺" },
+      { name: "India", code: "+91", flag: "🇮🇳" },
+      { name: "Italy", code: "+39", flag: "🇮🇹" },
+      { name: "Mexico", code: "+52", flag: "🇲🇽" },
+      { name: "South Korea", code: "+82", flag: "🇰🇷" },
+      { name: "Spain", code: "+34", flag: "🇪🇸" },
+      { name: "Indonesia", code: "+62", flag: "🇮🇩" },
+      { name: "Turkey", code: "+90", flag: "🇹🇷" },
+      { name: "Saudi Arabia", code: "+966", flag: "🇸🇦" },
+      { name: "South Africa", code: "+27", flag: "🇿🇦" },
+      { name: "Argentina", code: "+54", flag: "🇦🇷" }
+      // Add more countries here
+    ];
+    
+    // Populate the country dropdown
+    const countrySelect = document.getElementById("countrySelect");
+    const countryColor = document.getElementById("countrySelect");
+    
+    countries.forEach(country => {
+      const option = document.createElement("option");
+      option.value = country.code;
+      option.innerHTML = `${country.flag} ${country.name} (${country.code})`;
+      countrySelect.appendChild(option);
+    });
+    
+    // Update placeholder text based on selected country
+    countrySelect.addEventListener("change", function() {
+      const country = this.value;
+      const phoneInput = document.getElementById("phoneInput");
+      const selectedCountry = countries.find(c => c.name === country);
+      if (selectedCountry) {
+        phoneInput.placeholder = `Enter ${selectedCountry.name} phone number`;
+      } else {
+        phoneInput.placeholder = "Enter phone number";
+      }
+    });
+    </script>
+
+           
+           </body>
+           <footer>
+            <div class="row">
+                <div class="footer column">
+                    <p>Footer</p>
+                </div>
+            </div>
+        </footer>
+        
+           </html>
